@@ -1,0 +1,68 @@
+"""VER PROBLEMAS CON EL CODIGO"""
+
+# Nos piden que diseñemos un programa para gestionar donaciones de alimentos.
+# Los productos tienen los siguientes atributos:
+    # Nombre
+    # Cantidad
+# Tenemos dos tipos de productos:
+    # Perecedero: tiene un atributo llamado días a caducar
+    # No perecedero: tiene un atributo llamado tipo
+# Tendremos una función llamada Calcular, que según cada clase hará una cosa u otra, a esta función se le envía la cantidad por producto y entidades a las cuáles se entregarán donaciones.
+# # Debe obtener la cantidad que se enviará a cada entidad, sabiendo que la distribución debe ser lo más equitativa posible. En caso que sobren productos, se almacenan para el próximo ciclo de donación.
+# # Además si el producto es perecedero, se informará:
+    #Si le queda menos de 10 días para caducar, la entrega debe hacerse en el día actual.
+    #Si le queda 1 mes para caducar, la entrega debe hacerse en el plazo de 1 semana.
+    #Si fuera No Perecedero, se informa cuántos productos se entregarán por entidad y que queda libre la elección de la fecha de entrega siempre que no supere el mes.
+
+class Producto:
+    def __init__(self, nombre, cantidad):
+        self.nombre = nombre
+        self.cantidad = cantidad
+
+    def calcular(self, cantidad, entidad):
+        self.cantidad = cantidad
+        self.entidad = entidad
+        return cantidad/entidad
+        
+class Perecedero:
+    def __init__(self, nombre, cantidad, dias_caducar):
+        super().__init__(nombre, cantidad)
+        self.dias_caducar = dias_caducar
+   
+    def calcular(self, cantidad, entidad):
+        super().calcular(cantidad, entidad)
+        if self.dias_caducar < 10:
+            print(" %s productos se entregaran hoy")
+        elif self.dias_caducar < 30:
+            print(" %s productos se entregaran durante esta semana")
+
+class NoPerecedero:
+    def __init__(self, nombre, cantidad, tipo):
+        super().__init__(nombre, cantidad)
+        self.tipo = tipo
+    
+    def calcular(self, cantidad, entidad):
+      super().calcular(cantidad, entidad)
+      print("Se entregaran %s productos")
+
+p = Producto
+pp = Perecedero
+np = NoPerecedero
+
+print('Ingrese la cantidad de entidades a las cuales desea donar:')
+entidad = int(input('Entidades: '))
+print('Defina el tipo de producto tiene y cuantos quiere donar')
+print('1.Perecedero\n2.No Perecedero')
+producto = int(input('Producto: '))
+nombre = str(input('Ingrese el nombre de su producto: '))
+cantidad = int(input('Cantidad: '))
+
+if producto == 1:
+    print('A cuantos dias de caducar esta su producto?')
+    caducidad = int(input('fecha de caducidad: '))
+    print(pp.calcular(cantidad, entidad))
+
+if producto == 2:
+    print('Que tipo de producto desea donar: ')
+    tipo = str(input('tipo: '))
+    print(np.calcular(cantidad, entidad))
